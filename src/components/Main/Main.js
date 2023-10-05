@@ -8,13 +8,12 @@ import Footer from "../Footer/Footer";
 
 function Main() {
     return(
-        <>
+        <main>
             <Promo />
             <AboutProject />
             <Techs />
             <Portfolio />
-            <Footer />
-        </>
+        </main>
     );
 }
 

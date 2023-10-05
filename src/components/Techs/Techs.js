@@ -9,27 +9,27 @@ function Techs() {
                 <h3 className="techs__heading">7 технологий</h3>
                 <p className="techs__descr">На курсе веб-разработки мы освоили технологии, которые применили <br/>
                     в дипломном проекте.</p>
-                <ul className="table__techs">
-                    <li className="table__stack">
-                        <p className="table__stack_text">HTML</p>
+                <ul className="table-techs">
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">HTML</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">CSS</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">CSS</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">JS</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">JS</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">React</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">React</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">Git</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">Git</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">Express.js</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">Express.js</p>
                     </li>
-                    <li className="table__stack">
-                        <p className="table__stack_text">mongoDB</p>
+                    <li className="table-techs__stack">
+                        <p className="table-techs__text">mongoDB</p>
                     </li>
                 </ul>
             </div>

@@ -24,7 +24,7 @@
     background: #DADADA;
 }
 
-.table__project {
+.table-project {
     margin: 70px 0 0 0;
     padding: 0;
     display: flex;
@@ -32,11 +32,11 @@
     list-style: none;
 }
 
-.table__cell {
+.table-project__cell {
     max-width: 550px;
 }
 
-.table__heading {
+.table-project__heading {
     margin: 0;
     color: #FFF;
     font-size: 20px;
@@ -44,14 +44,14 @@
     letter-spacing: -0.8px;
 }
 
-.table__text {
+.table-project__text {
     margin: 26px 0 0 0;
     color: #FFF;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
 }
-.table__timeline {
+.table-timeline {
     margin: 110px 0 0 0;
     display: flex;
     justify-content: center;
@@ -59,13 +59,13 @@
     padding: 0;
 }
 
-.table__unit {
+.table-timeline__unit {
     font-size: 14px;
     font-weight: 400;
     margin: 0;
 }
 
-.table__unit-first {
+.unit_first {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +76,7 @@
     color: #000;
 }
 
-.table__unit-last {
+.unit_last {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +87,7 @@
     color: #FFF;
 }
 
-.table__unit-sprint {
+.table-timeline__sprint {
     margin: 14px 0 0 0;
     color: #8B8B8B;
     text-align: center;
@@ -97,7 +97,7 @@
 }
 
 @media screen and (max-width: 1154px) {
-    .table__unit-last {
+    .unit_last {
         width: 528px;
     }
 }
@@ -113,30 +113,30 @@
     }
 
     .about-project__title {
-        padding-top: 90px;
+        padding-top: 92px;
     }
 
     .about-project__divider {
-        margin-top: 28px;
+        margin-top: 23px;
     }
 
-    .table__cell {
+    .table-project__cell {
         max-width: 319px;
     }
 
-    .table__text {
+    .table-project__text {
         margin-top: 22px;
     }
 
-    .table__timeline {
+    .table-timeline {
         margin-top: 89px;
     }
 
-    .table__unit-first {
+    .unit_first {
         width: 140px;
     }
 
-    .table__unit-last {
+    .unit_last {
         width: 528px;
     }
 }
@@ -156,48 +156,48 @@
         letter-spacing: -0.72px;
     }
 
-    .table__project {
-        margin: 62px;
+    .table-project {
+        /*margin: 62px;*/
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    .table__cell {
+    .table-project__cell {
         padding-top: 59px;
         max-width: 319px;
     }
 
-    .table__cell:first-child {
+    .table-project__cell:first-child {
         padding-top: 0;
     }
 
-    .table__heading {
+    .table-project__heading {
         font-size: 18px;
         letter-spacing: -0.72px;
     }
 
-    .table__text {
+    .table-project__text {
         margin-top: 16px;
         font-size: 11px;
         line-height: 16px;
     }
 
-    .table__timeline {
+    .table-timeline {
         margin-top: 60px;
     }
 
-    .table__unit-first {
+    .unit_first {
         width: 100px;
         font-size: 11px;
     }
 
-    .table__unit-last {
+    .unit_last {
         width: 184px;
         font-size: 11px;
     }
 
-    .table__unit-sprint {
+    .table-timeline__sprint {
         margin-top: 10px;
         font-size: 11px;
     }

@@ -10,10 +10,10 @@ function Footer() {
                     <p className="footer__copy">
                         &copy; {new Date().getFullYear()}.
                     </p>
-                    <div className="footer__links">
+                    <nav className="footer__links">
                         <a href="https://practicum.yandex.ru/" className="footer__link">Яндекс.Практикум</a>
                         <a href="https://github.com/rust007-91" className="footer__link">Github</a>
-                    </div>
+                    </nav>
                 </div>
             </div>
         </footer>

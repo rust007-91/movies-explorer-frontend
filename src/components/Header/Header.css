@@ -18,27 +18,6 @@
     height: 38px;
 }
 
-.header__movies {
-    margin-left: 45px;
-}
-
-.header__films {
-    padding-right: 16px;
-    color: #FFF;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 18px;
-    text-decoration: none;
-}
-
-.header__films:hover {
-    text-decoration: underline;
-}
-
-.header__films:last-child {
-    padding-right: 0;
-}
-
 .header__auth-link {
     color: #FFF;
     font-size: 12px;
@@ -47,6 +26,11 @@
     text-decoration: none;
     padding: 0;
     margin: 0 0 0 30px;
+    transition: .5s;
+}
+
+.header__auth-link:hover {
+    opacity: 0.8;
 }
 
 .header__auth-link:first-child {
@@ -60,81 +44,31 @@
     padding: 8px 20px;
 }
 
-.header__profile-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 32px;
-    padding: 0;
-    background: #073042;
-    border-radius: 40px;
-    box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
-}
-
-.header__profile-btn:hover {
-    padding: 0;
-    margin: 0;
-    border: 2px solid #F5F5F5;
-}
-
-.header__profile-link {
-    margin-right: 7px;
-    color: #FFF;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 12px;
-    text-decoration: none;
-}
-
-.header__profile-circle {
-    display: flex;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: #0F4157;
-}
-
-.header__profile-icon {
-    color: #FFF;
-    margin: auto;
-    width: 10.383px;
-    height: 10.669px;
-}
-
-.header__burger {
-    width: 44px;
-    height: 44px;
-    display: none;
+.header__location_active {
+    background-color: #202020;
 }
 
 @media screen and (max-width: 768px){
-    /*.header__container {*/
-    /*    max-width: 708px;*/
-    /*}*/
+    .navigate {
+        display: none;
+    }
 
     .header__container {
         margin: 0 30px;
     }
 
-    /*.header__logo {*/
-    /*    margin: 0 0 0 30px;*/
-    /*}*/
+    .navigate__films {
+        text-decoration: none;
+        font-size: 22px;
+        font-weight: 500;
+    }
 
-    /*.header__auth {*/
-    /*    margin: 0 30px 0 0 ;*/
-    /*}*/
-
-    .header__movies {
-        display: none;
+    .navigate__films:hover {
+        text-decoration: underline;
     }
 
     .header__profile-btn {
         display: none;
-    }
-
-    .header__burger {
-        display: block;
     }
 }
 
@@ -152,11 +86,6 @@
     .header__auth-link_active {
         border-radius: 3px;
         padding: 7px 12px;
-    }
-
-    .header__burger {
-        width: 40px;
-        height: 43px;
     }
 }
 

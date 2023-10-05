@@ -1,42 +1,41 @@
 import { useEffect, useState } from "react";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 import './Header.css';
 import logo from '../../images/logo.svg';
-import icon_profile from '../../images/icon_profile.svg';
-import icon_burger from '../../images/icon_burger.svg';
+import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import ProfileBtn from "../ProfileBtn/ProfileBtn";
+import Navigation from "../Navigation/Navigation";
 
 
-function Header() {
+function Header(props) {
+    const {onClick} = props;
+
     const [isLogedIn, setLogedIn] = useState(false); // хук установки авторизации
-    return(
-        <header className="header">
-            <div className="header__container">
-                <img className="header__logo" src={logo} alt="Логотип"/>
+    const location = useLocation(); // хук вычисления страницы
 
+    return(
+        <header className={`header 
+        ${location.pathname === '/movies' && "header__location_active"} 
+        ${location.pathname === '/saved-movies' && "header__location_active"}
+        ${location.pathname === '/profile' && "header__location_active"}`
+        }>
+            <div className="header__container">
+                <Link to='/' className='header__logo-link'>
+                    <img className="header__logo" src={logo} alt="Логотип"/>
+                </Link>
                 {isLogedIn ?
                     (
                         <>
-                            <div className="header__movies">
-                                <Link to='/movies' className='header__films'>Фильмы</Link>
-                                <Link to='/saved-movies' className='header__films'>Сохранённые фильмы</Link>
-                            </div>
-
-                            <div className="header__profile-btn">
-                                <Link to='/profile' className="header__profile-link">Аккаунт</Link>
-                                <div className="header__profile-circle">
-                                    <img className="header__profile-icon" src={icon_profile} alt="иконка аккаунта"/>
-                                </div>
-                            </div>
-
-                            <img src={icon_burger} alt="меню бургер" className="header__burger"/>
+                            <Navigation />
+                            <ProfileBtn />
+                            <BurgerMenu onClick={onClick} />
                         </>
-
                     ) :
                     (
-                        <div className="header__auth">
+                        <nav className="header__auth">
                             <Link to='/signup' className="header__auth-link">Регистрация</Link>
                             <Link to='/signin' className="header__auth-link header__auth-link_active">Войти</Link>
-                        </div>
+                        </nav>
                     )
                 }
             </div>
