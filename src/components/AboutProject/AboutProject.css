@@ -31,7 +31,8 @@
     display: flex;
     justify-content: space-between;
     list-style: none;
-    gap: 40px;
+    column-gap: 40px;
+    row-gap: 0;
 }
 
 .table-project__cell {
@@ -53,11 +54,13 @@
     font-weight: 400;
     line-height: 20px;
 }
+
 .table-timeline {
     margin: 110px 0 0 0;
-    display: flex;
-    justify-content: center;
-    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 36px 36px;
+    row-gap: 14px;
     padding: 0;
 }
 
@@ -72,8 +75,6 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    width: 228px;
-    height: 36px;
     background: #3DDC84;
     color: #000;
 }
@@ -83,25 +84,17 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    width: 912px;
-    height: 36px;
     background: #303030;
     color: #FFF;
 }
 
 .table-timeline__sprint {
-    margin: 14px 0 0 0;
+    margin: 0;
     color: #8B8B8B;
     text-align: center;
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-}
-
-@media screen and (max-width: 1154px) {
-    .unit_last {
-        width: 528px;
-    }
 }
 
 @media screen and (max-width: 768px) {
@@ -123,7 +116,8 @@
     }
 
     .table-project {
-        gap: 30px;
+        column-gap: 30px;
+        row-gap: 59px;
     }
 
     .table-project__cell {
@@ -136,20 +130,18 @@
 
     .table-timeline {
         margin-top: 89px;
-    }
-
-    .unit_first {
-        width: 140px;
-    }
-
-    .unit_last {
-        width: 528px;
+        grid-template-columns: 140px 1fr;
     }
 }
 
-@media screen and (max-width: 671px) {
+@media screen and (max-width: 372px) {
     .about-project {
         min-height: 641px;
+    }
+
+    .about-project__container {
+        width: 284px;
+        padding: 0 18px;
     }
 
     .about-project__title {
@@ -159,14 +151,12 @@
     }
 
     .table-project {
-        /*margin: 62px;*/
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
     .table-project__cell {
-        padding-top: 59px;
         max-width: 319px;
     }
 
@@ -187,15 +177,15 @@
 
     .table-timeline {
         margin-top: 60px;
+        grid-template-columns: 100px 1fr;
+        row-gap: 10px;
     }
 
     .unit_first {
-        width: 100px;
         font-size: 11px;
     }
 
     .unit_last {
-        width: 184px;
         font-size: 11px;
     }
 
@@ -204,12 +194,3 @@
         font-size: 11px;
     }
 }
-
-@media screen and (max-width: 320px) {
-    .about-project__container {
-        width: 284px;
-        /*margin: 0 auto;*/
-        padding: 0 18px;
-    }
-}
-

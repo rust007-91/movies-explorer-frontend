@@ -17,16 +17,12 @@ function AboutProject() {
                     </li>
                 </ul>
 
-                <ul className="table-timeline">
-                    <li className="table-timeline__unit">
-                        <p className="unit unit_first">1 неделя</p>
-                        <p className="table-timeline__sprint">Back-end</p>
-                    </li>
-                    <li className="table-timeline__unit">
-                        <p className="unit unit_last">4 недели</p>
-                        <p className="table-timeline__sprint">Front-end</p>
-                    </li>
-                </ul>
+                <div className="table-timeline">
+                    <p className="unit unit_first">1 неделя</p>
+                    <p className="unit unit_last">4 недели</p>
+                    <p className="table-timeline__sprint">Back-end</p>
+                    <p className="table-timeline__sprint">Front-end</p>
+                </div>
             </div>
         </section>
     );
