@@ -1,0 +1,21 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.page {
+  background-color: #202020;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+.page__container {
+  margin: 0 auto;
+}
+

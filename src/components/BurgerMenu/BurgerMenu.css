@@ -1,0 +1,21 @@
+.header__burger {
+    width: 28px;
+    height: 23px;
+    padding-right: 8px;
+    display: none;
+    cursor: pointer;
+}
+
+.header__burger-slice {
+    height: 3px;
+    background: #ffffff;
+    display: block;
+}
+
+@media screen and (max-width: 768px){
+    .header__burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

@@ -4,6 +4,18 @@
 профиль или добавлять любимые фильмы, удалять их и сохранять.
 На главную страницу возможно попасть только пройдя регистрацию на сайте.
 
+## Название макета
+dark-5
+
+## Ссылка на макет
+https://www.figma.com/file/kJ8H1TWp6orqTLdeYQfqI1/light-1-(Copy)?node-id=1%3A12065&mode=dev
+
+
+## Запуск проекта
+`npm run start` — запускает проект
+
+Адрес репозитория: https://github.com/rust007-91/movies-explorer-api
+
 Адрес репозитория: https://github.com/rust007-91/movies-explorer-frontend
 
 ## Ссылки на проект
