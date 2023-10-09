@@ -6,6 +6,7 @@
 .elements__container {
     max-width: 1140px;
     margin: 0 auto;
+    padding: 0 70px;
 }
 
 .elements__card-list {
@@ -46,6 +47,10 @@
 }
 
 @media screen and (max-width: 768px){
+    .elements__container {
+        padding: 0 30px;
+    }
+
     .elements__card-list {
         padding-top: 87px;
         grid-template-columns:  repeat(auto-fit, 339px);
@@ -61,6 +66,10 @@
 }
 
 @media screen and (max-width: 340px){
+    .elements__container {
+        padding: 0 10px;
+    }
+
     .elements__card-list {
         padding-top: 58px;
         grid-template-columns:  repeat(auto-fit, 300px);

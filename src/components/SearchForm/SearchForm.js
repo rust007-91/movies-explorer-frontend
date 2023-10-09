@@ -1,5 +1,4 @@
 import './SearchForm.css';
-import searchBtn from '../../images/search__btn.svg';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm() {
@@ -12,11 +11,17 @@ function SearchForm() {
                         name="film"
                         className="search__input"
                         placeholder="Фильм"
+                        required
                     />
                     <button
                         type="submit"
                         className="search__btn">
-                        <img className="search__img" src={searchBtn} alt="кнопка поиска"/>
+
+                        <span className="search__arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="14" viewBox="0 0 7 14" fill="none">
+                            <path d="M1 13L6 7L1 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        </span>
                     </button>
                 </form>
                 <FilterCheckbox />

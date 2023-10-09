@@ -9,7 +9,7 @@
     justify-content: space-between;
     align-items: center;
     max-width: 1140px;
-    padding: 16px 0 18px;
+    padding: 16px 70px 18px;
     margin: 0 auto;
 }
 
@@ -54,7 +54,9 @@
     }
 
     .header__container {
-        margin: 0 30px;
+        /*margin: 0 30px;*/
+        padding-right: 30px;
+        padding-left: 30px;
     }
 
     .navigate__films {
@@ -76,6 +78,8 @@
     .header__container {
         width: 292px;
         margin: 0 auto;
+        padding-right: 14px;
+        padding-left: 14px;
     }
 
     .header__auth-link {

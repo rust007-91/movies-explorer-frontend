@@ -6,6 +6,7 @@
 .about-project__container {
     max-width: 1140px;
     margin: 0 auto;
+    padding: 0 70px;
 }
 
 .about-project__title {
@@ -30,6 +31,7 @@
     display: flex;
     justify-content: space-between;
     list-style: none;
+    gap: 40px;
 }
 
 .table-project__cell {
@@ -108,8 +110,8 @@
     }
 
     .about-project__container {
-        /*width: 668px;*/
-        margin: 0 50px;
+        /*margin: 0 50px;*/
+        padding: 0 50px;
     }
 
     .about-project__title {
@@ -118,6 +120,10 @@
 
     .about-project__divider {
         margin-top: 23px;
+    }
+
+    .table-project {
+        gap: 30px;
     }
 
     .table-project__cell {
@@ -142,10 +148,6 @@
 }
 
 @media screen and (max-width: 671px) {
-    /*.about-project__container {*/
-    /*    !*width: 284px;*!*/
-    /*}*/
-
     .about-project {
         min-height: 641px;
     }
@@ -206,7 +208,8 @@
 @media screen and (max-width: 320px) {
     .about-project__container {
         width: 284px;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
+        padding: 0 18px;
     }
 }
 

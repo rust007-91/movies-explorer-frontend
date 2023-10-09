@@ -5,6 +5,7 @@
 .footer__container {
     max-width: 1140px;
     margin: 0 auto;
+    padding: 0 70px;
 }
 
 .footer__heading {
@@ -63,8 +64,8 @@
 
 @media screen and (max-width: 768px) {
     .footer__container {
-        /*width: 708px;*/
-        margin: 0 30px;
+        /*margin: 0 30px;*/
+        padding: 0 30px;
     }
 
     .footer__heading {
@@ -84,7 +85,8 @@
 
     .footer__container {
         width: 300px;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
+        padding: 0 10px;
     }
 
     .footer__devider {

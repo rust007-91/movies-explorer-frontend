@@ -27,12 +27,10 @@ function Portfolio() {
                         <li className="case__portfolio">
                             <a href="https://rust007-91.github.io/how-to-learn/" target="_blank" className="case__link">Статичный сайт</a>
                         </li>
-                        <div className="case__divider"></div>
                         <li className="case__portfolio">
                             <a href="https://rust007-91.github.io/russian-travel/index.html" target="_blank"
                                className="case__link">Адаптивный сайт</a>
                         </li>
-                        <div className="case__divider"></div>
                         <li className="case__portfolio">
                             <a href="https://rust007-91.github.io/react-mesto-auth/" target="_blank"
                                className="case__link">Одностраничное приложение</a>

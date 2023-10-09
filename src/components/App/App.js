@@ -50,7 +50,6 @@ function App() {
                 <Route path='/signin' element={<Login />} />
                 <Route path='*' element={<PageNotFound />} />
             </Routes>
-
         </div>
     </div>
   );

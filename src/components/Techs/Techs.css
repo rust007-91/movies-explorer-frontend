@@ -6,6 +6,7 @@
 .techs__container {
     max-width: 1140px;
     margin: 0 auto;
+    padding: 0 70px;
 }
 
 .techs__title {
@@ -90,7 +91,8 @@
 
     .techs__container {
         /*width: 668px;*/
-        margin: 0 50px;
+        /*margin: 0 50px;*/
+        padding: 0 50px;
     }
 
     .techs__heading {
@@ -125,7 +127,8 @@
 
     .techs__container {
         width: 284px;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
+        padding: 0 18px;
     }
 
     .techs__title {

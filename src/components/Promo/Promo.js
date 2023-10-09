@@ -15,9 +15,7 @@ function Promo() {
                 </div>
 
                 <div className="promo__btn-wrap">
-                    <button className="promo__btn">
-                        <a href="#project" className="promo__link">Узнать больше</a>
-                    </button>
+                    <a href="#project" className="promo__btn">Узнать больше</a>
                 </div>
             </div>
         </section>

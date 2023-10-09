@@ -10,7 +10,7 @@ import Navigation from "../Navigation/Navigation";
 function Header(props) {
     const {onClick} = props;
 
-    const [isLogedIn, setLogedIn] = useState(false); // хук установки авторизации
+    const [isLogedIn, setLogedIn] = useState(true); // хук установки авторизации
     const location = useLocation(); // хук вычисления страницы
 
     return(

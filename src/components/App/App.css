@@ -4,6 +4,7 @@ html {
 
 .page {
   background-color: #202020;
+  margin: 0 auto;
   width: 100%;
   min-height: 100vh;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
@@ -15,7 +16,6 @@ html {
 }
 
 .page__container {
-  /*max-width: 1280px;*/
   margin: 0 auto;
 }
 

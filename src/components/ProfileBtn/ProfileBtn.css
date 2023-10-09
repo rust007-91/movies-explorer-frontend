@@ -1,29 +1,27 @@
 .profile-btn {
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100px;
     height: 32px;
-    padding: 0;
     background: #073042;
     border: none;
     border-radius: 20px;
-    transition: .5s;
-}
 
-.profile-btn:hover {
-    padding: 0;
-    margin: 0;
-    border: 2px solid #F5F5F5;
-}
-
-.profile-btn__link {
-    margin-right: 7px;
+    transition-property: border;
+    transition-duration: 0.5s;
+    box-sizing: border-box;
     color: #FFF;
     font-size: 13px;
     font-weight: 500;
     line-height: 12px;
     text-decoration: none;
+}
+
+.profile-btn:hover {
+    border: 2px solid #F5F5F5;
 }
 
 .profile-btn__circle {
@@ -32,6 +30,7 @@
     height: 26px;
     border-radius: 50%;
     background-color: #0F4157;
+    margin-left: 7px;
 }
 
 .profile-btn__icon {

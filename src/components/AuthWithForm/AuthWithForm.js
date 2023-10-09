@@ -7,8 +7,8 @@ function AuthWithForm(props) {
     return(
         <section className='auth'>
             <div className="auth__container">
-                <Link to='/' className='auth__logo_link'>
-                    <img src={logo} className="auth__logo"></img>
+                <Link to='/' className='auth__logo-link'>
+                    <img src={logo} className="auth__logo-img"></img>
                 </Link>
                 <form className="auth__form">
                     <h2 className="auth__form-title">{title}</h2>
