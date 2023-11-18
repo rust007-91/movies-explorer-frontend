@@ -58,6 +58,18 @@
     /*align-items: center;*/
 }
 
+.search__form-error {
+    color: #EE3465;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 9px;
+    display: block;
+    min-height: 20px;
+    padding-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 768px){
     .search__container {
         /*margin: 0 30px;*/
@@ -93,5 +105,9 @@
 
     .search__btn {
         bottom: 8px;
+    }
+
+    .search__form-error {
+        font-size: 10px;
     }
 }

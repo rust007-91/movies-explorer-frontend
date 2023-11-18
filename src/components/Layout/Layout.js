@@ -3,10 +3,10 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 function Layout(props) {
-    const {onClick}=props;
+    const {onClick, loggedIn}=props;
     return(
         <>
-            <Header onClick={onClick}/>
+            <Header onClick={onClick} loggedIn={loggedIn}/>
             <Outlet />
             <Footer />
         </>

@@ -1,7 +1,16 @@
 import './Register.css';
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
+import useFormWithValidation from "../../utils/hooks/useFormWithValidation";
 
-function Register() {
+function Register({onSubmit}) {
+    // const {values, handleChange, errors, isInputValid} = useFormWithValidation(); // хук обработки полей
+
+//     // Создание объекта RegExp с регулярным выражением
+//     const regex = new RegExp("^[a-zA-Zа-яА-Я\\s\\-]*$", 'v'); // Второй аргумент 'i' - флаг для регистронезависимого сравнения
+//
+// // Проверка строки на соответствие регулярному выражению
+//     const isValid = regex.test("rust007-91@mail.ru");
+
     return(
         <AuthWithForm
             title='Добро пожаловать!'
@@ -10,19 +19,10 @@ function Register() {
             questionText='Уже зарегистрированы?'
             linkText='Войти'
             route={'/signin'}
+            onSubmit={onSubmit}
         >
-            <div className="auth__form-wrap">
-                <label htmlFor='name__auth' className="auth__label">Имя</label>
-                <input
-                    id='name__auth'
-                    type="text"
-                    className="auth__input"
-                    name='name'
-                    minLength='2'
-                    maxLength='30'
-                    required
-                />
-            </div>
+
+
         </AuthWithForm>
     );
 }

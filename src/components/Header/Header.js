@@ -8,10 +8,8 @@ import Navigation from "../Navigation/Navigation";
 
 
 function Header(props) {
-    const {onClick} = props;
-
-    const [isLogedIn, setLogedIn] = useState(false); // хук установки авторизации
     const location = useLocation(); // хук вычисления страницы
+    const {onClick, loggedIn} = props;
 
     return(
         <header className={`header 
@@ -23,7 +21,7 @@ function Header(props) {
                 <Link to='/' className='header__logo-link'>
                     <img className="header__logo" src={logo} alt="Логотип"/>
                 </Link>
-                {isLogedIn ?
+                {loggedIn ?
                     (
                         <>
                             <Navigation />

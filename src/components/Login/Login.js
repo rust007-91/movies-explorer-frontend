@@ -1,7 +1,7 @@
 import './Login.css';
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
 
-function Login() {
+function Login({onSubmit}) {
     return(
         <AuthWithForm
             title='Рады видеть!'
@@ -10,6 +10,7 @@ function Login() {
             questionText='Ещё не зарегистрированы?'
             linkText='Регистрация'
             route='/signup'
+            onSubmit={onSubmit}
         />
     );
 }
