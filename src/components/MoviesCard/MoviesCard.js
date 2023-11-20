@@ -3,32 +3,36 @@ import './MoviesCard.css';
 import {convertDuration} from '../../utils/convertDuration';
 import {CurrentCardContext} from "../../contexts/CurrentCardContext";
 
-function MoviesCard({card, name, image, duration, trailer, onCardSave, onCardDel, savedCards}) {
+function MoviesCard({card, name, duration, trailer, onCardSave, onCardDel, savedCards}) {
+
     const timeFilm = convertDuration(duration); // конвертируемая продолжительность фильма
     const [isLiked, setLiked] = useState(false); // хук установки лайка (сохранение карточки)
 
-    useEffect(() => {
-        // вытаскиваем из localStorage и парсим объект
-        const savedCardsArray = JSON.parse(localStorage.getItem('savedMovies')) || [];
-        // Проверяем есть карточка отоброжаемого массива в массиве сохранённых и красим
-        setLiked(savedCardsArray.some((savedCard) => savedCard.movieId === card.id));
-    }, [savedCards, card.id]);
+    const isMoviePath = location.pathname === '/movies';
+    const image = isMoviePath ? `https://api.nomoreparties.co${card.image.url}` : card.image;
+
+        useEffect(() => {
+            // вытаскиваем из localStorage и парсим объект
+            const savedCardsArray = JSON.parse(localStorage.getItem('savedMovies')) || [];
+            // Проверяем есть карточка отоброжаемого массива в массиве сохранённых и красим
+            setLiked(savedCardsArray.some((savedCard) => savedCard.movieId === card.id));
+        }, [savedCards, card.id]);
 
 
     // Обработчик сохранения
     const handleCardClick = () => {
         if (isLiked) {
             onCardDel(card);
+            console.log("удал")
         } else {
+            console.log("сохра")
             onCardSave(card);
         }
-
         // Обновляем isLiked в зависимости от изменений в localStorage
         setLiked(!isLiked);
-
     }
 
-    const buttonCard = location.pathname === '/movies' ?
+    const buttonCard = isMoviePath ?
         <button
             className= {`elements__card-savebtn ${isLiked && "elements__card-savebtn_active"}`}
             type="button"
@@ -49,7 +53,7 @@ function MoviesCard({card, name, image, duration, trailer, onCardSave, onCardDel
             <li className="elements__card">
                 <a href={trailer} className="elements__trailer-link" target="_blank">
                     <img
-                        src={`https://api.nomoreparties.co${image}`}
+                        src={image}
                         alt="обложка фильма"
                         className="elements__card-image"
                     />

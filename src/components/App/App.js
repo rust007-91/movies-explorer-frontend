@@ -26,6 +26,7 @@ import useSearchForm from "../../utils/hooks/useSearchForm";
 function App() {
     const [isBurgerOpen, setBurgerOpen] = useState(false); // хук открытия попапа меню
     const [cards, setCards] = useState([]); // хук записи данных карточек
+    const [savedMoviesCards, setSavedMoviesCards] = useState([]); // хук записи данных сохранённых карточек
     const [isLoading, setLoading] = useState(false); // хук загрузки прелоадера
     const [isBtnMore, setBtnMore] = useState(false); // хук загрузки кнопки "Ещё"
     const [isInfoPopupOpen, setInfoPopupOpen] = useState(false); // хук для отображения уведомления
@@ -43,7 +44,7 @@ function App() {
     const location = useLocation(); // хук отслеживания страниц
 
     const {getMoviesApi} = MoviesApi();
-    const {register, login, checkToken, getInfo, setInfo, saveMovieCard, deleteMovieCard} = MainApi();
+    const {register, login, checkToken, getInfo, setInfo, saveMovieCard, deleteMovieCard, getSavedMovieCard} = MainApi();
     const {filterSearch, filterCheckBox} = useSearchForm(); // хук поиска по строке
 
     // Блокировка фона при открытии меню
@@ -67,14 +68,20 @@ function App() {
 
     // Обработчик проверки карточек, текста, чекбокса в localStorage
     const handleLocalCard = () => {
-        const data = JSON.parse(localStorage.getItem('data')); // получаем сохранённый объект
+        const allMovies = JSON.parse(localStorage.getItem('allMovies')); // получаем сохранённый объект
         const searchText = localStorage.getItem('searchText'); // получаем сохранённый текст запроса
         const toggle = JSON.parse(localStorage.getItem("toggle")); // получаем сохранённый статус чекбокса
         const token = localStorage.getItem('tokenMovie'); // получаем сохранённый токен
+        const savedCardsArray = JSON.parse(localStorage.getItem('savedMovies')) || []; // получаем сохранённый массив фильмов
+        const likeMovies = JSON.parse(localStorage.getItem('likeMovies')) || []; // получаем сохранённый объект
+
+        // Установка сохранённых фильмов после перезагруки
+        setSavedMoviesCards(savedCardsArray);
 
         // Установка карточек и кнопки после перезагруки
-        if (data) {
-            setCards(data);
+        if (allMovies) {
+            setCards(allMovies);
+
             setBtnMore(true);
         }
         // Установка значения текста в поисковой строке после перезагрузки
@@ -123,31 +130,66 @@ function App() {
             })
     }
 
-    // Загрузка карточек  beatfilm-movies
-    const handleSearch = () => {
-        setLoading(true);
-        getMoviesApi()
-            .then((data) => {
-                setCards(data);
-                setBtnMore(true);
-                localStorage.setItem('data', JSON.stringify(data));
-        })
-            .catch((err) => {
-                setInfoPopupOpen(true);
-                setInfoStatus(false);
-                setInfoText(`Во время запроса произошла ошибка. 
+    // Загрузка всех карточек beatfilm-movies
+    const handleSearchAllMovies = () => {
+        localStorage.setItem("searchText", valueSearch); // запись запроса в лс
+        const allMovies = JSON.parse(localStorage.getItem('allMovies')); // получаем сохранённый объект
+        if(allMovies) {
+            // Применяем фильтрацию на основе состояния чекбокса
+            const filteredCards = isChecked ? filterCheckBox(cards) : cards;
+            // Применяем фильтрацию по тексту на уже отфильтрованных фильмах
+            const filteredAndSearchedCards = filterSearch(filteredCards, valueSearch);
+            setCards(filteredAndSearchedCards);
+        } else {
+            setLoading(true);
+            getMoviesApi()
+                .then((data) => {
+                    setCards(data);
+                    setBtnMore(true);
+                    localStorage.setItem('allMovies', JSON.stringify(data));
+                })
+                .catch((err) => {
+                    setInfoPopupOpen(true);
+                    setInfoStatus(false);
+                    setInfoText(`Во время запроса произошла ошибка. 
                             Возможно, проблема с соединением или сервер недоступен. 
                             Подождите немного и попробуйте ещё раз.`);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
     }
 
     // Обработчик чекбокса короткометражек
-    const handleCheckbox = () => {
+    const handleCheckboxAllMovies = () => {
         setIsChecked(!isChecked); // переключаем визуально
         localStorage.setItem("toggle", JSON.stringify(!isChecked)); // устанавливаем состояние в localStorage
+    }
+
+
+    useEffect(() => {
+        getSavedMovieCard()
+            .then((data) => {
+                setSavedMoviesCards(data);
+                localStorage.setItem('savedMovies', JSON.stringify(data));
+            })
+            .catch((err) => alert(err))
+    }, [savedCards]);
+
+
+    // Загрузка карточек сохранённых
+    const handleSearchSavedMovies = () => {
+        // Применяем фильтрацию на основе состояния чекбокса
+        const filteredCards = isChecked ? filterCheckBox(cards) : cards;
+        // Применяем фильтрацию по тексту на уже отфильтрованных фильмах
+        const filteredAndSearchedCards = filterSearch(filteredCards, valueSearch);
+        setCards(filteredAndSearchedCards);
+    }
+
+    // Обработчик чекбокса короткометражек
+    const handleCheckboxSavedMovies = () => {
+        setIsChecked(!isChecked); // переключаем визуально
     }
 
     // Обработчик регистрации
@@ -182,26 +224,26 @@ function App() {
             })
     }
 
+    // Обрабтчик сохранения карты
     const handleCardSave = (card) => {
         saveMovieCard(card)
             .then((newCard) => {
-                const updatedSavedCards = [...savedCards, newCard];
-                setSavedCards(updatedSavedCards);
-                localStorage.setItem('savedMovies', JSON.stringify(updatedSavedCards));
+                setSavedCards([...savedCards, newCard]);
             })
             .catch((err) => alert(err));
     }
 
-
+    // Обрабтчик удаления карты из сохранённых
     const handleCardRemove = (card) => {
         // ищем сохранённую карту с _id
-        const itemToRemove = savedCards.find((item) => item.movieId === card.id);
+        const itemToRemove = savedMoviesCards.find((item) => item.movieId === card.id);
 
         if (itemToRemove) {
             return deleteMovieCard(itemToRemove._id)
                 .then(() => {
-                    const stateSavedCards = savedCards.filter((c) => c._id !== itemToRemove._id);
-                    setSavedCards(stateSavedCards);
+                    const stateSavedCards = savedMoviesCards.filter((c) => c._id !== itemToRemove._id);
+                    setSavedMoviesCards(stateSavedCards);
+
                     localStorage.setItem('savedMovies', JSON.stringify(stateSavedCards));
                 })
                 .catch((err) => alert(err));
@@ -234,7 +276,7 @@ function App() {
     <div className="page">
         <PopupMenu isOpen={isBurgerOpen} onClose={closeAllPopups} />
         <div className="page__container">
-            <CurrentCardContext.Provider value={{cards}}>
+            <CurrentCardContext.Provider value={{cards, savedMoviesCards}}>
                 <CurrenPreloaderContext.Provider value={isLoading}>
                     <CurrentBtnMoreContext.Provider value={{isBtnMore, setBtnMore}}>
                         <CurrentValueSearchContext.Provider value={{valueSearch, setValueSearch, isChecked, setIsChecked}}>
@@ -243,8 +285,19 @@ function App() {
                                    <Routes>
                                        <Route path='/' element={<Layout onClick={handleBurgerCLick} loggedIn={isLoggedIn}/>}>
                                            <Route index element={<Main />} />
-                                           <Route path='movies' element={<Movies onSubmit={handleSearch} onChange={handleCheckbox} onCardSave={handleCardSave} onCardDel={handleCardRemove} savedCards={savedCards}/>} />
-                                           <Route path='saved-movies' element={<SavedMovies />} />
+                                           <Route path='movies' element={<Movies
+                                               onSubmit={handleSearchAllMovies}
+                                               onChange={handleCheckboxAllMovies}
+                                               onCardSave={handleCardSave}
+                                               onCardDel={handleCardRemove}
+                                               savedCards={savedMoviesCards}/>}
+                                           />
+                                           <Route path='saved-movies' element={<SavedMovies
+                                               onSubmit={handleSearchSavedMovies}
+                                               onChange={handleCheckboxSavedMovies}
+                                               onCardSave={handleCardSave}
+                                               onCardDel={handleCardRemove}/>}
+                                           />
                                            <Route path='/profile' element={<Profile onSubmit={handleProfile} logOut={handleSignOut}/>} />
                                        </Route>
                                        <Route path='/signup' element={<Register onSubmit={handleRegister}/>} />

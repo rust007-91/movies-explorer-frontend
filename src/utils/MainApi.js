@@ -111,7 +111,7 @@ function MainApi () {
                 description: card.description,
                 image: `https://api.nomoreparties.co${card.image.url}`,
                 trailerLink: card.trailerLink,
-                thumbnail: `https://api.nomoreparties.co${card.image.formats.thumbnail.url}`,
+                thumbnail: `https://api.nomoreparties.co${card.image.url}`, // card.image.formats.thumbnail.url
                 movieId: card.id,
                 nameRU: card.nameRU,
                 nameEN: card.nameEN,
@@ -143,8 +143,26 @@ function MainApi () {
             })
     }
 
+    // Возвращение сохранённых фильмов из подборки
+    const getSavedMovieCard = () => {
+        return fetch(`${URL_MAIN}/movies`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
+            },
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Что-то пошло не так: ${res.status}`);
+            })
+    }
 
-    return {register, login, checkToken, getInfo, setInfo, saveMovieCard, deleteMovieCard};
+
+    return {register, login, checkToken, getInfo, setInfo, saveMovieCard, deleteMovieCard, getSavedMovieCard};
 
 }
 

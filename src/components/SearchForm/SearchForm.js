@@ -3,7 +3,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import {useContext, useState} from "react";
 import {CurrentValueSearchContext} from "../../contexts/CurrentValueSearchContext";
 
-function SearchForm({onSubmit}) {
+function SearchForm({onSubmit, onChange}) {
     const {valueSearch, setValueSearch} = useContext(CurrentValueSearchContext);
     const [errors, setErrors] = useState(""); // хук установки текста ошибки
 
@@ -26,7 +26,6 @@ function SearchForm({onSubmit}) {
         if (!valueSearch) {
             setErrors("Нужно ввести ключевое слово");
         } else {
-            localStorage.setItem("searchText", valueSearch);
             onSubmit();
         }
     }
@@ -61,7 +60,7 @@ function SearchForm({onSubmit}) {
 
                 <span className="search__form-error">{errors || ""}</span>
 
-                <FilterCheckbox />
+                <FilterCheckbox onChange={onChange} />
             </div>
         </section>
     );
