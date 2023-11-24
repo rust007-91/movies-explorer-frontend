@@ -2,6 +2,8 @@ import './SavedMovies.css';
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
+import MainApi from "../../utils/MainApi";
 
 function SavedMovies({onSubmit, onChange, onCardDel, onCardSave}) {
 

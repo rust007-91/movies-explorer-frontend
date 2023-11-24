@@ -1,15 +1,13 @@
 import './FilterCheckbox.css';
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import {CurrentValueSearchContext} from "../../contexts/CurrentValueSearchContext";
 
 
 function FilterCheckbox({onChange}) {
-    const {isChecked, setIsChecked} = useContext(CurrentValueSearchContext);
+    const {isShort} = useContext(CurrentValueSearchContext);
 
     const handleChange = () => {
         onChange();
-        // setIsChecked(!isChecked); // переключаем визуально
-        // localStorage.setItem("toggle", JSON.stringify(!isChecked)); // устанавливаем состояние в localStorage
     }
 
     return(
@@ -21,7 +19,7 @@ function FilterCheckbox({onChange}) {
                     value="shortfilm"
                     className="form__checkbox-input"
                     onChange={handleChange}
-                    checked={isChecked}
+                    checked={isShort}
                 />
                 <span className="form__checkbox-pseudo"></span>
             </label>

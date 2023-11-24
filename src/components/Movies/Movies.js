@@ -1,17 +1,17 @@
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import './Movies.css';
-import {useContext} from "react";
-import {CurrenPreloaderContext} from "../../contexts/CurrenPreloaderContext";
+import "./Movies.css";
 
-function Movies({onSubmit, onChange, onCardSave, onCardDel, savedCards}) {
-    const isLoading = useContext(CurrenPreloaderContext);
-
-    return(
+function Movies({ onSubmit, onChange, onCardSave, onCardDel, loading }) {
+    return (
         <div className="movies">
-            <SearchForm onSubmit={onSubmit} onChange={onChange}/>
-            {isLoading ? <Preloader /> : <MoviesCardList onCardSave={onCardSave} onCardDel={onCardDel} savedCards={savedCards}/>}
+            <SearchForm onSubmit={onSubmit} onChange={onChange} />
+            {loading ? (
+                <Preloader />
+            ) : (
+                <MoviesCardList onCardSave={onCardSave} onCardDel={onCardDel} />
+            )}
         </div>
     );
 }

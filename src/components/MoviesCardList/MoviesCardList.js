@@ -1,59 +1,65 @@
-import './MoviesCardList.css';
+import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import {useContext, useRef} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ButtonShowMore from "../ButtonShowMore/ButtonShowMore";
-import {CurrentCardContext} from "../../contexts/CurrentCardContext";
-import {CurrentValueSearchContext} from "../../contexts/CurrentValueSearchContext";
+import { CurrentCardContext } from "../../contexts/CurrentCardContext";
+import { CurrentValueSearchContext } from "../../contexts/CurrentValueSearchContext";
 import useSearchForm from "../../utils/hooks/useSearchForm";
-import savedMovies from "../SavedMovies/SavedMovies";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-function MoviesCardList({onCardSave, onCardDel, savedCards}) {
-    const {cards, savedMoviesCards} = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
-    const {valueSearch, isChecked} = useContext(CurrentValueSearchContext);
-
-    const location = useLocation();
-
-    const currentCards = location.pathname === '/movies' ? cards : savedMoviesCards;
-
+function MoviesCardList({ onCardSave, onCardDel }) {
+    const { cards, setCards, savedMoviesCards } = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
+    const { valueSearch, isShort } = useContext(CurrentValueSearchContext);
+    const { filterSearch, filterCheckBox } = useSearchForm(); // хук поиска по строке
+    const location = useLocation(); // хук определения страницы
     const cardListRef = useRef(); // записываем объект, возвращаемый хуком, в переменную и получаем доступ к элементам
-    // const {filterSearch, filterCheckBox} = useSearchForm(); // хук поиска по строке
-    //
-    // // Применяем фильтрацию на основе состояния чекбокса
-    // const filteredCards = isChecked ? filterCheckBox(currentCards) : currentCards;
+    const [isSearchExecuted, setIsSearchExecuted] = useState(false); // хук отслеживания произведен ли поиск
 
-    // // Применяем фильтрацию по тексту на уже отфильтрованных фильмах
-    // const filteredAndSearchedCards = filterSearch(filteredCards, valueSearch);
+    // Определяем какой массив карт применять в зависимости от страницы
+    const currentCards = location.pathname === "/movies" ? cards : savedMoviesCards;
+    // Применяем фильтрацию на основе состояния чекбокса
+    const filteredShortCards = isShort
+        ? filterCheckBox(currentCards)
+        : currentCards;
+    // Применяем фильтрацию по тексту
+    const filteredAndSearchedCards = filterSearch(
+        filteredShortCards,
+        valueSearch
+    );
+
+    // Индикатор поиска
+    useEffect(() => {
+        if (filteredAndSearchedCards.length > 0) {
+            setIsSearchExecuted(true);
+        }
+    }, [filteredAndSearchedCards]);
 
     return (
         <section className="elements">
             <div className="elements__container">
-                {currentCards.length === 0 ?
-                    (<h2 className='elements__search-text'>Ничего не найдено</h2>)
-                    : (
-                        <>
-                            <ul className="elements__card-list" ref={cardListRef}>
-                                {
-                                    currentCards.map((card) => {
-                                        return (
-                                            <MoviesCard
-                                                key={card.id || card.movieId}
-                                                card={card}
-                                                savedCards={savedCards}
-                                                name={card.nameRU}
-                                                duration={card.duration}
-                                                trailer={card.trailerLink}
-                                                onCardSave={onCardSave}
-                                                onCardDel={onCardDel}
-                                            />
-                                        );
-                                    })
-                                }
-                            </ul>
-                            <ButtonShowMore cardListRef={cardListRef}/>
-                        </>
-                    )
-                }
+                {isSearchExecuted && filteredAndSearchedCards.length === 0 ? (
+                    <h2 className="elements__search-text">Ничего не найдено</h2>
+                ) : (
+                    <>
+                        <ul className="elements__card-list" ref={cardListRef}>
+                            {filteredAndSearchedCards.map((card) => {
+                                return (
+                                    <MoviesCard
+                                        key={card.id || card.movieId}
+                                        card={card}
+                                        savedMoviesCards={savedMoviesCards}
+                                        name={card.nameRU}
+                                        duration={card.duration}
+                                        trailer={card.trailerLink}
+                                        onCardSave={onCardSave}
+                                        onCardDel={onCardDel}
+                                    />
+                                );
+                            })}
+                        </ul>
+                        <ButtonShowMore cardListRef={cardListRef} />
+                    </>
+                )}
             </div>
         </section>
     );

@@ -9,7 +9,9 @@ const useResize = () => {
 
     useEffect(() => {
         const handleResize = (e) => { // обработчик изменения разрешения экрана
-            setWidth(e.target.innerWidth); // установка текущего значения
+            setTimeout(() => { // задержка при изменении ширины экрана
+                setWidth(e.target.innerWidth); // установка текущего значения
+            }, 500)
         };
 
         window.addEventListener('resize', handleResize); // событие изменения разрешения экрана
