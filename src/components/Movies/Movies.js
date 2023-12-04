@@ -1,17 +1,13 @@
-import SearchForm from "../SearchForm/SearchForm";
-import Preloader from "../Preloader/Preloader";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import "./Movies.css";
+import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import './Movies.css';
 
-function Movies({ onSubmit, onChange, onCardSave, onCardDel, loading }) {
+function Movies({ loading, onSubmit }) {
     return (
         <div className="movies">
-            <SearchForm onSubmit={onSubmit} onChange={onChange} />
-            {loading ? (
-                <Preloader />
-            ) : (
-                <MoviesCardList onCardSave={onCardSave} onCardDel={onCardDel} />
-            )}
+            <SearchForm onSubmit={onSubmit} />
+            {loading ? <Preloader /> : <MoviesCardList />}
         </div>
     );
 }

@@ -1,43 +1,87 @@
-import { useEffect, useState } from "react";
-import "./MoviesCard.css";
-import { convertDuration } from "../../utils/convertDuration";
+import { useContext, useEffect, useState } from 'react';
+import './MoviesCard.css';
+import { convertDuration } from '../../utils/convertDuration';
+import { CurrentCardContext } from '../../contexts/CurrentCardContext';
+import MainApi from '../../utils/MainApi';
 
 function MoviesCard({
-                        card,
-                        savedMoviesCards,
-                        name,
-                        duration,
-                        trailer,
-                        onCardSave,
-                        onCardDel,
-                    }) {
+    currentCard,
+    name,
+    duration,
+    trailer,
+    savedMovies,
+    isSaved,
+    cardListRef,
+}) {
+    const { setSavedMovies } = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
     const timeFilm = convertDuration(duration); // конвертируемая продолжительность фильма
-    const [isLiked, setLiked] = useState(false); // хук установки лайка (сохранение карточки)
-    const isMoviePath = location.pathname === "/movies"; // определяем путь
+    const isMoviePath = location.pathname === '/movies'; // определяем путь
+    const { saveMovieCard, deleteMovieCard } = MainApi();
 
     const image = isMoviePath
-        ? `https://api.nomoreparties.co${card.image.url}`
-        : card.image;
+        ? `https://api.nomoreparties.co${currentCard.image.url}`
+        : currentCard.image;
 
-    useEffect(() => {
-        // Проверяем есть карточка отоброжаемого массива в массиве сохранённых и красим
-        setLiked(savedMoviesCards.some((itemCard) => (card.movieId || card.id) === itemCard.movieId));
-    }, [savedMoviesCards, card.id]);
+    // Обработчик сохранения карты
+    const handleCardSave = (card) => {
+        saveMovieCard(card)
+            .then((newCard) => {
+                // Добавляем свойство isSaved к новой карточке
+                const updatedCard = { ...newCard, isSaved: true };
+                // расширяем массив и записываем в стэйт и ls
+                const savedList = [...savedMovies, updatedCard];
+                setSavedMovies(savedList);
+                localStorage.setItem('savedMovies', JSON.stringify(savedList));
+            })
+            .catch((err) => alert(err));
+    };
+
+    // Обрабтчик удаления карты из сохранённых
+    const handleCardRemove = (card) => {
+        // ищем сохранённую карту с id
+        const itemToRemove = savedMovies.find(
+            (item) => (card.movieId || card.id) === item.movieId,
+        );
+
+        deleteMovieCard(itemToRemove._id)
+            .then(() => {
+                // исключаем удалённую карточку из сохранённого массива
+                const state = savedMovies.filter(
+                    (item) =>
+                        item.movieId !==
+                        (itemToRemove.id || itemToRemove.movieId),
+                );
+                setSavedMovies(state);
+                localStorage.setItem('savedMovies', JSON.stringify(state));
+            })
+            .catch((err) => alert(err));
+    };
 
     // Обработчик сохранения
     const handleCardClick = () => {
-        if (isLiked) {
-            onCardDel(card);
+        if (isSaved) {
+            handleCardRemove(currentCard);
         } else {
-            onCardSave(card);
+            handleCardSave(currentCard);
         }
-        setLiked(!isLiked); // Обновляем isLiked визуально
     };
+
+    if (cardListRef.current) {
+        // находим и извлекаем в новый массив элементы для видимости
+        const array = Array.from(cardListRef.current.children);
+
+        // Все карточки на странице сохранённых фильмов должны быть видны
+        if (location.pathname === '/saved-movies') {
+            array.forEach((card) =>
+                card.classList.add('elements__card_active'),
+            );
+        }
+    }
 
     const buttonCard = isMoviePath ? (
         <button
             className={`elements__card-savebtn ${
-                isLiked && "elements__card-savebtn_active"
+                isSaved && 'elements__card-savebtn_active'
             }`}
             type="button"
             onClick={handleCardClick}
@@ -68,7 +112,11 @@ function MoviesCard({
     return (
         <>
             <li className="elements__card">
-                <a href={trailer} className="elements__trailer-link" target="_blank">
+                <a
+                    href={trailer}
+                    className="elements__trailer-link"
+                    target="_blank"
+                >
                     <img
                         src={image}
                         alt="обложка фильма"

@@ -1,23 +1,22 @@
-import {useEffect, useState} from "react";
-
+import { useEffect, useState } from 'react';
+import { SCREEN_XS, SCREEN_MD, SCREEN_XL } from '../constants';
 const useResize = () => {
-    const SCREEN_XS = 320;
-    const SCREEN_MD = 767;
-    const SCREEN_XL = 1279;
-
     const [width, setWidth] = useState(window.innerWidth); // хук установки значения ширины экрана
 
     useEffect(() => {
-        const handleResize = (e) => { // обработчик изменения разрешения экрана
-            setTimeout(() => { // задержка при изменении ширины экрана
-                setWidth(e.target.innerWidth); // установка текущего значения
-            }, 500)
+        const handleResize = (e) => {
+            // обработчик изменения разрешения экрана
+            setTimeout(() => {
+                // задержка при изменении ширины экрана
+                const innerWidth = e.target.innerWidth;
+                setWidth(innerWidth); // установка текущего значения
+            }, 500);
         };
-
-        window.addEventListener('resize', handleResize); // событие изменения разрешения экрана
-
+        // событие изменения разрешения экрана
+        window.addEventListener('resize', handleResize);
+        // очистка события
         return () => {
-            window.removeEventListener('resize', handleResize); // очистка события
+            window.removeEventListener('resize', handleResize);
         };
     }, [width]);
 

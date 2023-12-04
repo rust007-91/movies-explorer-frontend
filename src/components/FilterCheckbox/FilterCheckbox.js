@@ -1,16 +1,11 @@
 import './FilterCheckbox.css';
-import {useContext} from "react";
-import {CurrentValueSearchContext} from "../../contexts/CurrentValueSearchContext";
+import { useContext } from 'react';
+import { CurrentSearchContext } from '../../contexts/CurrentSearchContext';
 
+function FilterCheckbox({ onChange }) {
+    const { isShort } = useContext(CurrentSearchContext);
 
-function FilterCheckbox({onChange}) {
-    const {isShort} = useContext(CurrentValueSearchContext);
-
-    const handleChange = () => {
-        onChange();
-    }
-
-    return(
+    return (
         <form className="form__checkbox">
             <label className="form__checkbox-label">
                 <input
@@ -18,8 +13,8 @@ function FilterCheckbox({onChange}) {
                     name="shortfilm"
                     value="shortfilm"
                     className="form__checkbox-input"
-                    onChange={handleChange}
-                    checked={isShort}
+                    onChange={onChange}
+                    checked={isShort || false}
                 />
                 <span className="form__checkbox-pseudo"></span>
             </label>

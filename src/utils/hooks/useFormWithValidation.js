@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from 'react';
 
 //хук обработки формы
 function useFormWithValidation() {
@@ -12,9 +12,9 @@ function useFormWithValidation() {
         const value = input.value; // данные поля
         const name = input.name; // имя инпута
 
-        setValues({...values, [name]: value});
-        setErrors({...errors, [name]: input.validationMessage});
-        setIsFormValid(input.closest("form").checkValidity());
+        setValues({ ...values, [name]: value });
+        setErrors({ ...errors, [name]: input.validationMessage });
+        setIsFormValid(input.closest('form').checkValidity());
         setIsInputValid(input.validity.valid);
     };
 
@@ -24,10 +24,19 @@ function useFormWithValidation() {
             setErrors(newErrors);
             setIsFormValid(newIsValid);
         },
-        [setValues, setErrors, setIsFormValid]
+        [setValues, setErrors, setIsFormValid],
     );
 
-    return {values, handleChange, setValues, errors, isInputValid, isFormValid, resetForm};
+    return {
+        values,
+        handleChange,
+        setValues,
+        errors,
+        isInputValid,
+        isFormValid,
+        resetForm,
+        setIsFormValid,
+    };
 }
 
 export default useFormWithValidation;

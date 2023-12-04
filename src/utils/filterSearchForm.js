@@ -1,6 +1,4 @@
-
-const useSearchForm = () => {
-
+const filterSearchForm = () => {
     // Функция фильтрации фильмов (возвращает отфильтрованный массив)
     const filterSearch = (data, value) => {
         return data.filter((item) => {
@@ -18,15 +16,14 @@ const useSearchForm = () => {
 
     const filterCheckBox = (data) => {
         return data.filter((item) => {
-
             if (item.duration < 40) {
                 return true;
             }
             return false;
         });
-    }
+    };
 
-    return {filterSearch, filterCheckBox};
-}
+    return { filterSearch, filterCheckBox };
+};
 
-export default useSearchForm;
+export default filterSearchForm;

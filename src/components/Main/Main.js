@@ -1,12 +1,12 @@
 import './Main.css';
-import "../Promo/Promo";
-import Promo from "../Promo/Promo";
-import AboutProject from "../AboutProject/AboutProject";
-import Techs from "../Techs/Techs";
-import Portfolio from "../Portfolio/Portfolio";
+import '../Promo/Promo';
+import Promo from '../Promo/Promo';
+import AboutProject from '../AboutProject/AboutProject';
+import Techs from '../Techs/Techs';
+import Portfolio from '../Portfolio/Portfolio';
 
 function Main() {
-    return(
+    return (
         <main>
             <Promo />
             <AboutProject />
@@ -15,6 +15,5 @@ function Main() {
         </main>
     );
 }
-
 
 export default Main;

@@ -1,14 +1,21 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from 'react';
 import './Profile.css';
-import useFormWithValidation from "../../utils/hooks/useFormWithValidation";
-import {CurrentUserContext} from "../../contexts/CurrentUserContext";
-import {CurrentServerErrorsContext} from "../../contexts/CurrentServerErrorsContext";
+import useFormWithValidation from '../../utils/hooks/useFormWithValidation';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentServerErrorsContext } from '../../contexts/CurrentServerErrorsContext';
 
-function Profile({onSubmit, logOut}) {
+function Profile({ onSubmit, logOut }) {
     const [isEdit, setEdit] = useState(true); // хук установки редактирования
-    const {values, handleChange, setValues, errors, isInputValid, isFormValid, resetForm} = useFormWithValidation(); // хук обработки полей
+    const {
+        values,
+        handleChange,
+        setValues,
+        errors,
+        isFormValid,
+        setIsFormValid,
+    } = useFormWithValidation(); // хук обработки полей
     const currentUser = useContext(CurrentUserContext);
-    const serverErrorText =useContext(CurrentServerErrorsContext);
+    const serverErrorText = useContext(CurrentServerErrorsContext);
 
     useEffect(() => {
         // Устанавливаем в стэйт данные пользователя
@@ -17,53 +24,70 @@ function Profile({onSubmit, logOut}) {
             name: currentUser.name,
             email: currentUser.email,
         });
-    },[currentUser]);
+    }, [currentUser]);
 
     useEffect(() => {
         // Контролируем кнопку редактирования
-        if (currentUser.name === values.name && currentUser.email === values.email) {
-            setEdit(true);
+        if (
+            currentUser.name === values.name &&
+            currentUser.email === values.email
+        ) {
+            setIsFormValid(false);
         } else {
-            setEdit(false);
+            setIsFormValid(true);
         }
-    },[currentUser, values]);
-
+    }, [currentUser, values]);
 
     const handleEdit = () => {
         setEdit(!isEdit);
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(values);
-    }
+        setEdit(true);
+    };
 
-    return(
+    return (
         <>
             <section className="profile">
                 <div className="profile__container">
                     <form className="profile__form">
-                        <h2 className="profile__form-title">Привет, {currentUser.name}!</h2>
+                        <h2 className="profile__form-title">
+                            Привет, {currentUser.name}!
+                        </h2>
 
                         <fieldset className="profile__form-wrap">
-                            <label htmlFor="profile-name" className="profile__form-label">Имя</label>
+                            <label
+                                htmlFor="profile-name"
+                                className="profile__form-label"
+                            >
+                                Имя
+                            </label>
                             <input
                                 type="text"
                                 className="profile__form-input"
                                 id="profile-name"
                                 name="name"
                                 placeholder="Введите имя"
-                                minLength='2'
-                                maxLength='30'
+                                minLength="2"
+                                maxLength="30"
                                 required
-                                pattern='^[a-zA-Zа-яА-Я\s\-]*$'
+                                pattern="^[a-zA-Zа-яА-Я\s\-]*$"
                                 onChange={handleChange}
-                                value={values.name || ""}
+                                value={values.name || ''}
                                 disabled={isEdit}
                             />
-                            <span className="profile__form-error">{errors.name || ""}</span>
+                            <span className="profile__form-error">
+                                {errors.name || ''}
+                            </span>
 
-                            <label htmlFor="profile-email" className="profile__form-label">E-mail</label>
+                            <label
+                                htmlFor="profile-email"
+                                className="profile__form-label"
+                            >
+                                E-mail
+                            </label>
                             <input
                                 type="email"
                                 className="profile__form-input"
@@ -73,54 +97,55 @@ function Profile({onSubmit, logOut}) {
                                 pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
                                 required
                                 onChange={handleChange}
-                                value={values.email  || ""}
+                                value={values.email || ''}
                                 disabled={isEdit}
                             />
-                            <span className="profile__form-error">{errors.email || ""}</span>
+                            <span className="profile__form-error">
+                                {errors.email || ''}
+                            </span>
                         </fieldset>
 
-                        {
-                            isEdit ? (
-                                <>
-                                    <button
-                                        type='submit'
-                                        className='profile__btn profile__btn_edit'
-                                        onClick={handleEdit}
-                                    >
-                                        Редактировать
-                                    </button>
+                        {isEdit ? (
+                            <>
+                                <button
+                                    type="submit"
+                                    className="profile__btn profile__btn_edit"
+                                    onClick={handleEdit}
+                                >
+                                    Редактировать
+                                </button>
 
-                                    <button
-                                        type='button'
-                                        className='profile__btn profile__btn_exit'
-                                        onClick={logOut}
-                                    >
-                                        Выйти из аккаунта
-                                    </button>
-                                </>
-                            ) : (
-                                <div className="profile__btn-wrap">
-                                    <span className="profile__serv-error">
-                                        {serverErrorText === "Failed to fetch"
+                                <button
+                                    type="button"
+                                    className="profile__btn profile__btn_exit"
+                                    onClick={logOut}
+                                >
+                                    Выйти из аккаунта
+                                </button>
+                            </>
+                        ) : (
+                            <div className="profile__btn-wrap">
+                                <span className="profile__serv-error">
+                                    {serverErrorText === 'Failed to fetch'
                                         ? 'При регистрации пользователя произошла ошибка'
                                         : serverErrorText}
-                                    </span>
-                                    <button
-                                        type='submit'
-                                        className={`profile__btn profile__btn_save ${!isFormValid && 'profile__btn_disabled'}`}
-                                        disabled={!isFormValid}
-                                        onClick={handleSubmit}
-                                    >
-                                        Сохранить
-                                    </button>
-                                </div>
-                            )
-                        }
+                                </span>
+                                <button
+                                    type="submit"
+                                    className={`profile__btn profile__btn_save ${
+                                        !isFormValid && 'profile__btn_disabled'
+                                    }`}
+                                    disabled={!isFormValid}
+                                    onClick={handleSubmit}
+                                >
+                                    Сохранить
+                                </button>
+                            </div>
+                        )}
                     </form>
                 </div>
             </section>
         </>
-
     );
 }
 

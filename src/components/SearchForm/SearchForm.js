@@ -1,31 +1,38 @@
-import "./SearchForm.css";
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import { useContext, useState } from "react";
-import { CurrentValueSearchContext } from "../../contexts/CurrentValueSearchContext";
+import './SearchForm.css';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { useEffect } from 'react';
+import useFormSearch from '../../utils/hooks/useFormSearch';
 
-function SearchForm({ onSubmit, onChange }) {
-    const { valueSearch, setValueSearch } = useContext(CurrentValueSearchContext);
-    const [errorValidation, setErrorValidation] = useState(""); // хук установки текста ошибки
+function SearchForm({ onSubmit }) {
+    const {
+        handleChange,
+        valueSearch,
+        setErrorValidation,
+        errorValidation,
+        handleCheckbox,
+        resetForm,
+    } = useFormSearch();
 
-    // Обработчик поля инпут
-    const handleChange = (e) => {
-        const input = e.target;
-        const value = input.value;
-        setValueSearch(value);
-
-        // мгновенное очищение поля от ошибки
-        if (value) {
-            return setErrorValidation("");
-        }
-    };
+    useEffect(() => {
+        const currentValue =
+            location.pathname === '/movies'
+                ? localStorage.getItem('searchText')
+                : '';
+        const currentCheckBox =
+            location.pathname === '/movies'
+                ? JSON.parse(localStorage.getItem('toggle'))
+                : false;
+        resetForm(currentValue, currentCheckBox);
+    }, [resetForm]);
 
     // Обработчик кнопки
     const handleSubmit = (e) => {
         e.preventDefault();
         // проверка на валидность и сохранение
         if (!valueSearch) {
-            setErrorValidation("Нужно ввести ключевое слово");
+            setErrorValidation('Нужно ввести ключевое слово');
         } else {
+            localStorage.setItem('searchText', valueSearch); // запись запроса в лс
             onSubmit();
         }
     };
@@ -41,34 +48,40 @@ function SearchForm({ onSubmit, onChange }) {
                         className="search__input"
                         placeholder="Фильм"
                         onChange={handleChange}
-                        value={valueSearch || ""}
+                        value={valueSearch || ''}
                         required
                     />
 
-                    <button type="submit" className="search__btn" onClick={handleSubmit}>
+                    <button
+                        type="submit"
+                        className="search__btn"
+                        onClick={handleSubmit}
+                    >
                         <span className="search__arrow">
-                          <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="7"
-                              height="14"
-                              viewBox="0 0 7 14"
-                              fill="none"
-                          >
-                            <path
-                                d="M1 13L6 7L1 1"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                          </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="7"
+                                height="14"
+                                viewBox="0 0 7 14"
+                                fill="none"
+                            >
+                                <path
+                                    d="M1 13L6 7L1 1"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
                         </span>
                     </button>
                 </form>
 
-                <span className="search__form-error">{errorValidation || ""}</span>
+                <span className="search__form-error">
+                    {errorValidation || ''}
+                </span>
 
-                <FilterCheckbox onChange={onChange} />
+                <FilterCheckbox onChange={handleCheckbox} />
             </div>
         </section>
     );

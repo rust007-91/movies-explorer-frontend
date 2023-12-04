@@ -1,108 +1,94 @@
-import {useState} from "react";
+import { URL_MAIN } from '../utils/constants';
 
-const URL_MAIN = 'https://api.movies-rotkin.nomoredomainsicu.ru';
+function MainApi() {
+    const token = localStorage.getItem('tokenMovie');
 
-function MainApi () {
-
-    const headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+    // Заголовок для базовый
+    const headersBase = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    };
+    // Заголовок для Movie
+    const headersMovie = {
+        ...headersBase,
+        Authorization: `Bearer ${token}`,
     };
 
+    // Запрос для регистрации и авторизации с выодом ошибки с сервера
     const requestAuth = (url, option) => {
-        return fetch(url, option)
-            .then((res) => {
-                if (!res.ok) {
-                    return res.json().then((resErr) => Promise.reject(resErr)); // пробрасываем в блок catch объект ошибки
-                }
+        return fetch(url, option).then((res) => {
+            if (!res.ok) {
+                return res.json().then((resErr) => {
+                    throw new Error(resErr); // пробрасываем в блок catch объект ошибки
+                });
+            }
+            return res.json();
+        });
+    };
+
+    // Запрос для операций с фильмами
+    const requestMovie = (url, options) => {
+        return fetch(url, options).then((res) => {
+            if (res) {
                 return res.json();
-            })
-            .catch((err) => {
-                throw err; // Проброс ошибки для дальнейшей обработки в handleRegister
-            });
-    }
+            }
+            throw new Error(`Что-то пошло не так: ${res.status}`);
+        });
+    };
 
     // Запрос на регистрацию
     const register = (name, email, password) => {
         return requestAuth(`${URL_MAIN}/signup`, {
             method: 'POST',
-            headers: headers,
-            body: JSON.stringify({name, email, password})
-        })
-    }
+            headers: headersBase,
+            body: JSON.stringify({ name, email, password }),
+        });
+    };
 
     // Запрос на авторизацию
     const login = (email, password) => {
         return requestAuth(`${URL_MAIN}/signin`, {
             method: 'POST',
-            headers: headers,
-            body: JSON.stringify({email, password})
-        })
-    }
-
-    // Запрос информации по токену
-    const checkToken = (token) => {
-        return fetch(`${URL_MAIN}/users/me`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            }
-        })
-            .then((res) => {
-                if (res) {
-                    return res.json();
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`)
-            })
-    }
-
-    // Запрос информации о пользователе
-    // Метод запроса информации о пользователе с сервера
-   const getInfo = () => {
-        return fetch (`${URL_MAIN}/users/me`, {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
-            }
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-   }
+            headers: headersBase,
+            body: JSON.stringify({ email, password }),
+        });
+    };
 
     // Метод обновления информации о пользователе на сервере
     const setInfo = ({ name, email }) => {
         return requestAuth(`${URL_MAIN}/users/me`, {
-            method: "PATCH",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
-            },
+            method: 'PATCH',
+            headers: headersMovie,
             body: JSON.stringify({
                 name: name,
                 email: email,
             }),
-        })
-    }
+        });
+    };
+
+    // Запрос информации по токену
+    const checkToken = () => {
+        return requestMovie(`${URL_MAIN}/users/me`, {
+            method: 'GET',
+            headers: headersMovie,
+        });
+    };
+
+    // Запрос информации о пользователе
+    // Метод запроса информации о пользователе с сервера
+    const getInfo = () => {
+        return requestMovie(`${URL_MAIN}/users/me`, {
+            method: 'GET',
+            headers: headersMovie,
+        });
+    };
 
     // Сохранение фильма в подборку
     // Метод обработки лайков на сервере
     const saveMovieCard = (card) => {
-        return fetch(`${URL_MAIN}/movies`, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
-            },
+        return requestMovie(`${URL_MAIN}/movies`, {
+            method: 'POST',
+            headers: headersMovie,
             body: JSON.stringify({
                 country: card.country,
                 director: card.director,
@@ -116,54 +102,35 @@ function MainApi () {
                 nameRU: card.nameRU,
                 nameEN: card.nameEN,
             }),
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
+        });
+    };
 
     // Удаление фильма из подборки
     const deleteMovieCard = (id) => {
-        return fetch(`${URL_MAIN}/movies/${id}`, {
-            method: "DELETE",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
-            },
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
+        return requestMovie(`${URL_MAIN}/movies/${id}`, {
+            method: 'DELETE',
+            headers: headersMovie,
+        });
+    };
 
     // Возвращение сохранённых фильмов из подборки
     const getSavedMovieCard = () => {
-        return fetch(`${URL_MAIN}/movies`, {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('tokenMovie')}`,
-            },
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`);
-            })
-    }
+        return requestMovie(`${URL_MAIN}/movies`, {
+            method: 'GET',
+            headers: headersMovie,
+        });
+    };
 
-
-    return {register, login, checkToken, getInfo, setInfo, saveMovieCard, deleteMovieCard, getSavedMovieCard};
-
+    return {
+        register,
+        login,
+        checkToken,
+        getInfo,
+        setInfo,
+        saveMovieCard,
+        deleteMovieCard,
+        getSavedMovieCard,
+    };
 }
 
 export default MainApi;
