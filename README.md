@@ -18,6 +18,8 @@ https://www.figma.com/file/kJ8H1TWp6orqTLdeYQfqI1/light-1-(Copy)?node-id=1%3A120
 
 Адрес репозитория: https://github.com/rust007-91/movies-explorer-frontend
 
+pull request: https://github.com/rust007-91/movies-explorer-frontend/pull/2
+
 ## Ссылки на проект
 
 IP 158.160.106.8
