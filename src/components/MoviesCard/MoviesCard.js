@@ -11,7 +11,6 @@ function MoviesCard({
     trailer,
     savedMovies,
     isSaved,
-    cardListRef,
 }) {
     const { setSavedMovies } = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
     const timeFilm = convertDuration(duration); // конвертируемая продолжительность фильма
@@ -66,18 +65,6 @@ function MoviesCard({
         }
     };
 
-    if (cardListRef.current) {
-        // находим и извлекаем в новый массив элементы для видимости
-        const array = Array.from(cardListRef.current.children);
-
-        // Все карточки на странице сохранённых фильмов должны быть видны
-        if (location.pathname === '/saved-movies') {
-            array.forEach((card) =>
-                card.classList.add('elements__card_active'),
-            );
-        }
-    }
-
     const buttonCard = isMoviePath ? (
         <button
             className={`elements__card-savebtn ${
@@ -111,7 +98,7 @@ function MoviesCard({
 
     return (
         <>
-            <li className="elements__card">
+            <li className={`elements__card ${isSaved && "elements__card_active"}`}>
                 <a
                     href={trailer}
                     className="elements__trailer-link"

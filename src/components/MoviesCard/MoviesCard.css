@@ -84,6 +84,16 @@
     display: list-item;
 }
 
+@media screen and (max-width: 1279px) {
+    .elements__card:nth-child(n + 16) {
+        display: none;
+    }
+
+    .elements__card.elements__card_active {
+        display: list-item;
+    }
+}
+
 @media screen and (max-width: 768px){
     .elements__card:nth-child(n + 9) {
         display: none;

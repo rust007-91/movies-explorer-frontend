@@ -1,7 +1,7 @@
 import './Register.css';
 import AuthWithForm from '../AuthWithForm/AuthWithForm';
 
-function Register({ onSubmit }) {
+function Register({ onSubmit, loading }) {
     return (
         <AuthWithForm
             title="Добро пожаловать!"
@@ -11,6 +11,7 @@ function Register({ onSubmit }) {
             linkText="Войти"
             route={'/signin'}
             onSubmit={onSubmit}
+            loading={loading}
         ></AuthWithForm>
     );
 }

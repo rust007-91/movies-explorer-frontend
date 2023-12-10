@@ -18,8 +18,10 @@ function MainApi() {
     const requestAuth = (url, option) => {
         return fetch(url, option).then((res) => {
             if (!res.ok) {
-                return res.json().then((resErr) => {
-                    throw new Error(resErr); // пробрасываем в блок catch объект ошибки
+                return res.json()
+                    .then((resErr) => {
+                        const errorText = resErr.message || 'Произошла ошибка на сервере';
+                        throw new Error(errorText); // пробрасываем в блок catch объект ошибки
                 });
             }
             return res.json();

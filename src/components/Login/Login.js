@@ -1,7 +1,7 @@
 import './Login.css';
 import AuthWithForm from '../AuthWithForm/AuthWithForm';
 
-function Login({ onSubmit }) {
+function Login({ onSubmit, loading }) {
     return (
         <AuthWithForm
             title="Рады видеть!"
@@ -11,6 +11,7 @@ function Login({ onSubmit }) {
             linkText="Регистрация"
             route="/signup"
             onSubmit={onSubmit}
+            loading={loading}
         />
     );
 }

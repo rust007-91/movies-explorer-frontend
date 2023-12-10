@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import '../../vendor/normalize.css';
 import '../../vendor/fonts/fonts.css';
 import './App.css';
@@ -34,7 +34,7 @@ function App() {
     const [isShort, setIsShort] = useState(
         JSON.parse(localStorage.getItem('toggle')) || false,
     ); // хук переключения чекбокса
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // хук управления авторизацией
+    const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem("isLoggedIn")) || false); // хук управления авторизацией
     const [currentUser, setCurrentUser] = useState({}); // хук установки пользователя
     const [isLoading, setLoading] = useState(false); // хук загрузки прелоадера
     const [isBurgerOpen, setBurgerOpen] = useState(false); // хук открытия попапа меню
@@ -65,8 +65,7 @@ function App() {
         if (token) {
             checkToken()
                 .then(() => {
-                    setIsLoggedIn(true); // авторизуем пользователя
-                    navigate('/movies', { replace: true }); // перенаправлени на фильмы
+                    localStorage.setItem('isLoggedIn', JSON.stringify(true)); // сохранение состояния логина
                 })
                 .catch((err) => alert(err));
         }
@@ -127,6 +126,7 @@ function App() {
     // Обработчик регистрации
     const handleRegister = (formValue) => {
         const { name, email, password } = formValue;
+        setLoading(true); // прелоадер
         register(name, email, password)
             .then(() => {
                 setInfoPopupOpen(true);
@@ -136,24 +136,32 @@ function App() {
             })
             .catch((err) => {
                 setServerErrorText(err.message); // устанавливаем текст ошибки от сервера
-            });
+            })
+            .finally(() => {
+            setLoading(false);
+        });
     };
 
     // Обработчик авторизации
     const handleLogin = (formValue) => {
         const { email, password } = formValue;
+        setLoading(true); // прелоадер
         // запрос на авторазицию и получение токена
         login(email, password)
             .then((data) => {
                 if (data.token) {
                     localStorage.setItem('tokenMovie', data.token); // сохранение токена
+                    localStorage.setItem('isLoggedIn', JSON.stringify(true)); // сохранение состояния логина
                     setIsLoggedIn(true); // авторизуем пользователя
                     navigate('/movies', { replace: true }); // перенаправлени на фильмы
                 }
             })
             .catch((err) => {
                 setServerErrorText(err.message); // устанавливаем текст ошибки от сервера
-            });
+            })
+            .finally(() => {
+            setLoading(false);
+        });
     };
 
     // Обработчик бургера
@@ -198,15 +206,17 @@ function App() {
                                     <Route
                                         path="/signup"
                                         element={
-                                            <Register
-                                                onSubmit={handleRegister}
-                                            />
+                                            !isLoggedIn
+                                                ? <Register onSubmit={handleRegister} loading={isLoading} />
+                                                : <Navigate to="/" replace />
                                         }
                                     />
                                     <Route
                                         path="/signin"
                                         element={
-                                            <Login onSubmit={handleLogin} />
+                                            !isLoggedIn
+                                                ? <Login onSubmit={handleLogin} loading={isLoading} />
+                                                : <Navigate to="/" replace />
                                         }
                                     />
                                     <Route

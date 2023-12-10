@@ -48,6 +48,7 @@ function MoviesCardList() {
         }
     }, [filteredAndSearchedCards]);
 
+
     return (
         <section className="elements">
             <div className="elements__container">
@@ -55,7 +56,7 @@ function MoviesCardList() {
                     <h2 className="elements__search-text">Ничего не найдено</h2>
                 ) : (
                     <>
-                        <ul className="elements__card-list" ref={cardListRef}>
+                        <ul className="elements__card-list" >
                             {filteredAndSearchedCards.map((card) => {
                                 return (
                                     <MoviesCard
@@ -66,12 +67,11 @@ function MoviesCardList() {
                                         trailer={card.trailerLink}
                                         savedMovies={savedMovies}
                                         isSaved={card.isSaved}
-                                        cardListRef={cardListRef}
                                     />
                                 );
                             })}
                         </ul>
-                        <ButtonShowMore cardListRef={cardListRef} />
+                        <ButtonShowMore filteredAndSearchedCards={filteredAndSearchedCards}/>
                     </>
                 )}
             </div>

@@ -32,8 +32,11 @@ function SearchForm({ onSubmit }) {
         if (!valueSearch) {
             setErrorValidation('Нужно ввести ключевое слово');
         } else {
-            localStorage.setItem('searchText', valueSearch); // запись запроса в лс
-            onSubmit();
+            // обработчик сработает только на старнице movies
+            if(location.pathname === '/movies') {
+                localStorage.setItem('searchText', valueSearch); // запись запроса в лс
+                onSubmit();
+            }
         }
     };
 

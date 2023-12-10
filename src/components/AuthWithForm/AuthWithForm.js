@@ -5,10 +5,9 @@ import useFormWithValidation from '../../utils/hooks/useFormWithValidation';
 import { useContext, useEffect } from 'react';
 import { CurrentServerErrorsContext } from '../../contexts/CurrentServerErrorsContext';
 
-function AuthWithForm(props) {
+function AuthWithForm({ title, name, btnText, questionText, linkText, route, onSubmit, loading }) {
     const serverErrorText = useContext(CurrentServerErrorsContext); // контекст ошибки от сервера
-    const { title, name, btnText, questionText, linkText, route, onSubmit } =
-        props;
+
     const {
         values,
         handleChange,
@@ -27,6 +26,9 @@ function AuthWithForm(props) {
         e.preventDefault();
         onSubmit(values);
     };
+
+    console.log(isFormValid)
+    console.log(loading)
 
     return (
         <section className="auth">
@@ -116,9 +118,9 @@ function AuthWithForm(props) {
                         <button
                             type="submit"
                             className={`auth__btn ${
-                                !isFormValid && 'auth__btn_disabled'
+                                (!isFormValid || loading) && 'auth__btn_disabled'
                             }`}
-                            disabled={!isFormValid}
+                            disabled={!isFormValid || loading}
                             onClick={handleSubmit}
                         >
                             {btnText}
