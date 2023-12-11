@@ -2,9 +2,9 @@ const filterSearchForm = () => {
     // Функция фильтрации фильмов (возвращает отфильтрованный массив)
     const filterSearch = (data, value) => {
         return data.filter((item) => {
-            const nameRU = item.nameRU.toLowerCase(); // достаём текст и приводим к нижнему регистру
-            const nameEN = item.nameEN.toLowerCase();
-            const searchText = value.toLowerCase(); // текст в поисковом поле
+            const nameRU = (item.nameRU || '').toLowerCase(); // проверка на null или undefined
+            const nameEN = (item.nameEN || '').toLowerCase();
+            const searchText = (value || '').toLowerCase(); // проверка на null или undefined
 
             // Проверяем, содержит ли nameRU или nameEN введенный текст запроса
             if (nameRU.includes(searchText) || nameEN.includes(searchText)) {

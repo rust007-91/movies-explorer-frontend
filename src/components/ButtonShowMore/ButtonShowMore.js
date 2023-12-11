@@ -1,6 +1,5 @@
 import './ButtonShowMore.css';
-import { useContext, useState, useEffect } from 'react';
-import { CurrentCardContext } from '../../contexts/CurrentCardContext';
+import { useState, useEffect } from 'react';
 import useResize from '../../utils/hooks/useResize';
 import {
     DESCTOP_CARD_COUNT_ONE,
@@ -10,7 +9,6 @@ import {
 } from '../../utils/constants';
 
 function ButtonShowMore({filteredAndSearchedCards}) {
-    const { movies } = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
     const [isBtnMore, setBtnMore] = useState(false); // хук загрузки кнопки "Ещё"
     const [visibleMovies, setVisibleMovies] = useState([]); // хук загрузки кнопки "Ещё"
     const { isScreenXL, isScreenMD, isScreenML, isScreenXS } = useResize(); // хук изменения расширения экрана
@@ -54,8 +52,6 @@ function ButtonShowMore({filteredAndSearchedCards}) {
         // Проверяем, остались ли ещё карточки для отображения
         setBtnMore(updatedVisibleMovies.length < filteredAndSearchedCards.length);
     };
-
-
 
     return (
         <div

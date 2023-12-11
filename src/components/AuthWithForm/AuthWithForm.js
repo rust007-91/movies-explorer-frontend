@@ -27,9 +27,6 @@ function AuthWithForm({ title, name, btnText, questionText, linkText, route, onS
         onSubmit(values);
     };
 
-    console.log(isFormValid)
-    console.log(loading)
-
     return (
         <section className="auth">
             <div className="auth__container">

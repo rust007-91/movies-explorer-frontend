@@ -179,6 +179,7 @@ function App() {
     const handleSignOut = () => {
         // удаляем сохранённые данные
         localStorage.clear();
+        setMovies([]);
         setIsLoggedIn(false);
         navigate('/', { replace: true });
     };

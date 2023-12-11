@@ -1,6 +1,6 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ButtonShowMore from '../ButtonShowMore/ButtonShowMore';
 import { CurrentCardContext } from '../../contexts/CurrentCardContext';
 import { CurrentSearchContext } from '../../contexts/CurrentSearchContext';
@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 
 function MoviesCardList() {
     const location = useLocation(); // хук определения страницы
-    const cardListRef = useRef(); // записываем объект, возвращаемый хуком, в переменную и получаем доступ к элементам
     const { movies, savedMovies } = useContext(CurrentCardContext); // Подписываемся на контекст CurrentCardsContext
     const { valueSearch, isShort } = useContext(CurrentSearchContext);
     const [isSearchExecuted, setIsSearchExecuted] = useState(false); // хук отслеживания произведен ли поиск

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import './MoviesCard.css';
 import { convertDuration } from '../../utils/convertDuration';
 import { CurrentCardContext } from '../../contexts/CurrentCardContext';
