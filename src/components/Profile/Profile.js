@@ -4,7 +4,7 @@ import useFormWithValidation from '../../utils/hooks/useFormWithValidation';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { CurrentServerErrorsContext } from '../../contexts/CurrentServerErrorsContext';
 
-function Profile({ onSubmit, logOut }) {
+function Profile({ onSubmit, logOut, loading }) {
     const [isEdit, setEdit] = useState(true); // хук установки редактирования
     const {
         values,
@@ -76,7 +76,7 @@ function Profile({ onSubmit, logOut }) {
                                 pattern="^[a-zA-Zа-яА-Я\s\-]*$"
                                 onChange={handleChange}
                                 value={values.name || ''}
-                                disabled={isEdit}
+                                disabled={isEdit || loading}
                             />
                             <span className="profile__form-error">
                                 {errors.name || ''}
@@ -98,7 +98,7 @@ function Profile({ onSubmit, logOut }) {
                                 required
                                 onChange={handleChange}
                                 value={values.email || ''}
-                                disabled={isEdit}
+                                disabled={isEdit || loading}
                             />
                             <span className="profile__form-error">
                                 {errors.email || ''}
@@ -133,9 +133,9 @@ function Profile({ onSubmit, logOut }) {
                                 <button
                                     type="submit"
                                     className={`profile__btn profile__btn_save ${
-                                        !isFormValid && 'profile__btn_disabled'
+                                        (!isFormValid || loading) && 'profile__btn_disabled'
                                     }`}
-                                    disabled={!isFormValid}
+                                    disabled={!isFormValid || loading}
                                     onClick={handleSubmit}
                                 >
                                     Сохранить

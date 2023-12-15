@@ -89,6 +89,7 @@ function App() {
 
     // Редактирование данных в профиле
     const handleProfile = (values) => {
+        setLoading(true); // прелоадер
         setInfo(values)
             .then((data) => {
                 setCurrentUser(data); // запись данных профиля в стэйт
@@ -98,6 +99,9 @@ function App() {
             })
             .catch((err) => {
                 setServerErrorText(err.message); // устанавливаем текст ошибки от сервера
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
@@ -265,6 +269,7 @@ function App() {
                                                     element={Profile}
                                                     onSubmit={handleProfile}
                                                     logOut={handleSignOut}
+                                                    loading={isLoading}
                                                 />
                                             }
                                         />
