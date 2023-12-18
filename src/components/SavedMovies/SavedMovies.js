@@ -1,12 +1,11 @@
 import './SavedMovies.css';
-import SearchForm from "../SearchForm/SearchForm";
-import Preloader from "../Preloader/Preloader";
-import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
-    return(
+function SavedMovies({ onSubmit }) {
+    return (
         <div className="saved-movies">
-            <SearchForm />
+            <SearchForm onSubmit={onSubmit} />
             <MoviesCardList />
         </div>
     );
