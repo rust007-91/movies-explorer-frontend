@@ -65,7 +65,7 @@ function Portfolio() {
                         </li>
                         <li className="case__portfolio">
                             <a
-                                href="https://rust007-91.github.io/react-mesto-auth/"
+                                href="https://rust007-91.github.io/mesto/"
                                 target="_blank"
                                 className="case__link"
                             >
